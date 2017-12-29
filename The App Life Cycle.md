@@ -27,7 +27,7 @@ main 함수는 UIKit에 대한 접근을 담당하며, UIApplicationMain은 App�
 
 UIApplicationMain은 앱 실행에 필요한 주된 값들을 설정한다. 다음 그림(2-1)은 각 object들의 앱 내에서 역할을 표현하며 이 구조는 다양한 환경에서의 앱 실행을 보장한다.
 
-![core_objects_2x](/Users/user/Documents/Study/Repo/resource/core_objects_2x.png)
+![core_objects_2x](./resource/core_objects_2x.png)
 
 
 
@@ -70,7 +70,7 @@ App에는 다양한 event가 전달될 수 있으며, event는 아래 표에 정
 
 App은 항상 다음에서 정의된 상태를 가진다. 이 상태를 actions들에 의하여 변경된다.
 
-![high_level_flow_2x](/Users/user/Documents/Study/Repo/resource/high_level_flow_2x.png)
+![high_level_flow_2x](./resource/high_level_flow_2x.png)
 
 - **Not running** - 실행되지 않았거나, system에 의해 종료된 상태를 의미한다.
 
