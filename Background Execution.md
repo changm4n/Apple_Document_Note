@@ -1,16 +1,18 @@
 # Background Execution
 
-보통 iOS는 사용중이지 않은 앱을 suspended 하기 전, background 상태로 유지한다. background 상태에선 여러 작업들을 수행할 수 있다. 불필요한 목적의 background 처리는 배터리 소모, 메모리 낭비를 야기하므로 꼭 필요한 목적으로만 background execution을 활용하도록 한다.
+보통 iOS는 사용중이지 않은 앱을 suspended 하기 전, background 상태로 유지한다. 
+
+background 상태에선 여러 작업들을 수행할 수 있다. 불필요한 목적의 background 처리는 배터리 소모, 메모리 낭비를 야기하므로 꼭 필요한 목적으로만 background execution을 활용하도록 한다.
 
 
 
-## Executing Finite-Length Tasks
+### Executing Finite-Length Tasks
 
 App이 background 실행이 필요하다면, `beginBackgroundTaskWithName:expirationHandler:`  또는 `beginBackgroundTaskWithExpirationHandler:`  함수를 활용하여 App이 suspend되지 않도록 방지하며, 작업을 수행할 수 있다. 작업이 종료되었다면, `endBackgroundTask:` 를 호출하여 suspend가능한 상태로 전환하도록 한다. 
 
-`beginBackgroundTaskWithName:expirationHandler:` `beginBackgroundTaskWithExpirationHandler:`   두 함수는  Task를 식별하는 토큰을 발행하며, 
+`beginBackgroundTaskWithName:expirationHandler:` `beginBackgroundTaskWithExpirationHandler:`   두 함수는  Task를 식별하는 토큰을 발행하며, `endBackgroundTask:` 메소드에 토큰을 넘겨줌으로서 작업 종료를 알릴 수 있다.  
 
-`endBackgroundTask:` 메소드에 토큰을 넘겨줌으로서 작업 종료를 알릴 수 있다.  `endBackgroundTask:` 함수 호출에 실패한다면, App은 종료될 수 있으므로, 작업 Expiration Handler를 설정하여, 정상적으로 작업을 중단, App이 종료될 수 있도록 설정할 수 있다.
+`endBackgroundTask:` 함수 호출에 실패한다면, App은 종료될 수 있으므로, 작업 Expiration Handler를 설정하여, 정상적으로 작업을 중단, App이 종료될 수 있도록 설정할 수 있다.
 
 
 
@@ -20,12 +22,12 @@ App이 background 실행이 필요하다면, `beginBackgroundTaskWithName:expira
 
 ```swift
 func applicationDidEnterBackground(_ application: UIApplication) {
-        var task = application.beginBackgroundTask(withName: "taskName") 		 {
+        var task = application.beginBackgroundTask(withName: "taskName") 		 
+  		{
             // Clean up task unfinished
             // Stop task
             application.endBackgroundTask("taskName")
             task = UIBackgroundTaskInvalid
-
         }
         // Start Task
         DispatchQueue.global().async {
@@ -43,23 +45,27 @@ func applicationDidEnterBackground(_ application: UIApplication) {
 
 Expiration Handler는 항상 제공하여야 한다. `backgroundTimeRemaining`  property를 활용하여 App의 남은 실행시간을 확인할 수 있다.  Expiration Handler이 호출된 시점은, 이미 App이 종료되는 시간에 가깝단 의미이므로, 긴 시간이 소요되는 작업은 포함하지 않도록 한다.
 
+## 
 
 
 
-
-## Downloading Content in the Background
+### Downloading Content in the Background
 
 `NSURLSesstion` 을 활용하여 background에서의 Downloading을 구현할 수 있다. 그 방법으로는, `NSURLSessionConfiguration` object를 생성하여 별도의 설정 후, `NSURLSesstion`의 생성자에 전달한다. 
 
 background에서의 download가 완료된다면, 종료된 App은 재실행되어, `application:handleEventsForBackgroundURLSession:completionHandler:`를 호출한다. 
 
+## 
 
 
-## Implementing Long-Running Tasks
+
+### Implementing Long-Running Tasks
 
 장시간 작업이 필요한 작업에 대해서는 특정 권한 요청이 필요하다. 이 설정을 사용할 수 있는 App의 종류로는 오디오, 녹음, 위치, Voice over, download, 외부 장치로부터의 응답을 구현한 App이 있다.
 
 위 기능을 다루는 App은 그 기능을 구현한 Framework와 서비스들을 `Capabilities` 또는 `info.plist`에 명시하여야 한다. 
+
+## 
 
 
 
@@ -73,6 +79,8 @@ Foreground에서만 위치정보를 다루도록 구현한다면, App이 backgro
 
 위치정보를 상시로 다루는 작업은 많은 전력을 소비하므로, 이 기능은 최소화하여 구현하는게좋다.
 
+## 
+
 
 
 ### Playing and Recording Background Audio
@@ -85,11 +93,15 @@ background에서 지정된 작업은 실행되며 callback 함수 또한 정상�
 
 다양한 App이 background 상태에서 실행되며 audio를 활용 할 수 있다. Foreground 상태의 App이 우선순위를 가지며, background 상태의 App 또한 Audio를 재생할 수 있다. 이러한 결정은 App의 Audio session object를 통하여 설정할 수 있다. 
 
+## 
+
 
 
 ### Fetching Small Amounts of Content Opportunistically
 
 정기적인 작업을 위한 App실행은 `Capabilities`의 설정으로 App을 재호출하여 구현이 가능하다. 이 설정을 활성화 하더라도, System 자체적인 조율을 통하여 App을 실행하기 때문에, 그 과정을 항상 보장할 수 없다.  기회가 되어,  App이 호출된다면, `application:performFetchWithCompletionHandler:` 함수가 호출된다. 이 함수에서 작업의 진행에 따라 App의 상태를 설정할 수 있다. 
+
+## 
 
 
 
@@ -98,6 +110,8 @@ background에서 지정된 작업은 실행되며 callback 함수 또한 정상�
 '새로운 content가 유효할 때, 사용자에게 알리며 즉시 download를 시작하는 기능' 의 목적은 사용자가 알람을 확인하고, 새로운 content에 접근하는 시점의 간격을 좁히는데 사용된다. 이러한 기능은 `Capabilities`에서 `Remote notifications` 옵션을 활성화 하여 구현이 가능하다. `content-available` key의 값을 1로 설정한 원격 알람을 통하여 download를 시작할 수 있다. 
 
 `application:didReceiveRemoteNotification:fetchCompletionHandler:`가 호출되며 App이 활성화된다. 
+
+## 
 
 
 
@@ -111,6 +125,9 @@ background에서 지정된 작업은 실행되며 callback 함수 또한 정상�
 - 활성화된 App은 10초 정도의 시간을 작업에 소요할 수 있다. `beginBackgroundTaskWithExpirationHandler:` 함수를 활용하여 추가적인 시간을 요구할 순 있지만 권장되진 않는다.
 
 
+## 
+
+
 
 ### Communicating with a Bluetooth Accessory
 
@@ -122,6 +139,9 @@ BLE기기의 호출을 통하여 App을 활성화시킬 수 있다. `Capabilitie
 - 활성화된 App은 10초 정도의 시간을 작업에 소요할 수 있다. `beginBackgroundTaskWithExpirationHandler:` 함수를 활용하여 추가적인 시간을 요구할 순 있지만 권장되진 않는다.
 
 
+## 
+
+
 
 ## Getting the User’s Attention While in the Background
 
@@ -131,7 +151,9 @@ Notification은 App이 실행 중이지 않거나, background 상태이거나, s
 
 Note : `UILocalNotification`은 iOS10 에서 deprecated되었다. UNNotificationRequest 를 사용한다.
 
-## Understanding When Your App Gets Launched into the Background
+
+
+### Understanding When Your App Gets Launched into the Background
 
 App이 종료되었더라도, 다음과 같은 환경에서 System은 App을 다시 실행시킨다.
 
@@ -148,7 +170,7 @@ App이 종료되었더라도, 다음과 같은 환경에서 System은 App을 다
 
 
 
-## Being a Responsible Background App
+### Being a Responsible Background App
 
 App이 background상태라면, 다음과 같은 guideline을 준수하여야 한다.
 
