@@ -1,5 +1,3 @@
-//보충가능 체크
-
 # Strategies for Handling App State Transitions
 
 iOS App은 여러 상태를 가지며, 상태별로 특성을 갖는다. 다른 상태로 전환 시 system은 `app object`로 상태 전환을 알려, 개발자는  `UIApplicationDelegate`의 methods를 통해서 처리할 수 있다. 
@@ -12,7 +10,7 @@ App이 시작되는 시점에선  `application:willFinishLaunchingWithOptions:` 
 
 - App의 시작 옵션들이 담긴 Dictionary를 통하여 어떻게 App이 실행되었는지를 확인, 대응한다.
 - App의 자료구조를 초기화한다.
-- App이 나타낼 Window와 View를 준비한다. //보충가능
+- App이 나타낼 Window와 View를 준비한다. 
 
 App이 시작되는 시점에서 system은 Main storyboard를 호출하고, 시작 Viewconteroller를 호출한다. 상태복구이 필요한 App의 경우, 위의 두 함수가 호출되는 사이에 복구가 이루어져야 한다. `application:willFinishLaunchingWithOptions:`함수로 복원할 window를 설정하며,
 
@@ -28,13 +26,13 @@ App이 실행되면, App은 정지 상태에서 활성화 또는 백그라운드
 
 
 
-//사진첨부
-
-
+![4-1](./resource/4-1.png)
 
 App이 실행되어 백그라운드 상태로 진입한다면, 이전에 소개한 과정과는 다르게, event를 처리하며 window엔 표시되지 않지만, App의 UI File들을 로드한다. 
 
 
+
+![4-2](./resource/4-2.png)
 
 이 두 상태는 `application:willFinishLaunchingWithOptions:` 와  `application:didFinishLaunchingWithOptions:` 두 함수의 `UIApplication` 객체의 `applicationState` 프로퍼티로 확인할 수 있다.
 
@@ -153,15 +151,15 @@ system은 `UIApplicationDidEnterBackgroundNotification`알람을 전송하며 `a
 
 ### The Background Transition Cycle
 
-사용자가 홈버튼, 잠금버튼을 누르거나 다른 App이 실행된다면, 기존의 App은  Inactive상태를 거쳐 background 상태로 진입한다. 이 과정에선 `applicationWillResignActive:` 와 `applicationDidEnterBackground:`  두 함수가 호출된다. `applicationDidEnterBackground:`함수 호출 후, 보통 App들은 잠시나마 정지 상태가 된다. background작업을 실행하거나, 다른 실행 시간을 필요로 하는 App의 경우, 더 오랜시간 유지된다.
+사용자가 홈버튼, 잠금 버튼을 누르거나 다른 App이 실행된다면, 기존의 App은  Inactive 상태를 거쳐 background 상태로 진입한다. 이 과정에선 `applicationWillResignActive:` 와 `applicationDidEnterBackground:`  두 함수가 호출된다. `applicationDidEnterBackground:`함수 호출 후, 보통 App들은 잠시나마 정지 상태가 된다. background 작업을 실행하거나, 다른 실행 시간을 필요로 하는 App의 경우, 더 오랜 시간 유지된다.
 
 
 
 ### Prepare for the App Snapshot
 
-`applicationDidEnterBackground:`함수가 반환된 후 system은 App의 스크린샷을 저장한다. App이 background 작업을 위하여 활성화 된다면, system 은 스크린샷을 업데이트 한다. 
+`applicationDidEnterBackground:`함수가 반환된 후 system은 App의 스크린샷을 저장한다. App이 background 작업을 위하여 활성화된다면, system 은 스크린샷을 업데이트한다. 
 
-background 진입 시 UI변경을 적용하고 싶다면,  `snapshotViewAfterScreenUpdates:` 함수를 호출하여 적용한 변화의 rendering을 강제할 수 있다. view에서 `setNeedsDisplay` 함수를 호출하는 것은 다음 drawing주기 전에 스크린샷을 저장하여 변화가 적용되지 않으므로 비효율적이다. 
+background 진입 시 UI 변경을 적용하고 싶다면,  `snapshotViewAfterScreenUpdates:` 함수를 호출하여 적용한 변화의 rendering을 강제할 수 있다. view에서 `setNeedsDisplay` 함수를 호출하는 것은 다음 drawing주기 전에 스크린샷을 저장하여 변화가 적용되지 않으므로 비효율적이다. 
 
 ### Reduce Your Memory Footprint
 
