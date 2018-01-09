@@ -8,6 +8,8 @@
 
 개인 정보를 보호하는 것은 아주 중요하다.  개인 정보란 유저 데이터, 사용자 식별 정보 등을 포함한다. 프레임워크들이 제공되어 이러한 정보를 보호할 수 있다.
 
+
+
 ### Protecting Data Using On-Disk Encryption
 
 데이터의 암호화, 복호화를 통한 정보 보호는 내장된 하드웨어를 활용하여 이루어진다. 잠금 상태에선 App이 직접 만든 파일일지라도, 접근이 불가능하다. 반드시 기기를 unlock하여야 해당 파일에 접근이 가능하다.
@@ -89,13 +91,12 @@
 
 
 
+
 ## Preserving Your App’s Visual Appearance Across Launches
 
 Background상태의 App은 system의 메모리 관리 정책에 따라 불시에 종료될 수 있다. 사용자는 App이 일시정지 되었다고 생각하기 때문에, 이전의 상태를 복구하는 것이 좋다. 
 
 UIKit이 이러한 복구 system을 지원한다. App의 콘텐츠를 이해한다면, 복원에 필요한 코드만 작성할 수 있다. UI를 업데이트 한다면, 기존의 콘텐츠를 새로운 콘텐츠로 연결하는 방법을 알아야 한다.
-
-
 
 상태 복원 시 3가지를 고려해야 한다.
 
@@ -103,11 +104,15 @@ UIKit이 이러한 복구 system을 지원한다. App의 콘텐츠를 이해한�
 - Viewcontroller Object - 전반적인 UI의 상태를 관리한다.
 - Custom view - 보존되어야 할 데이터를 가지고 있다.
 
+
+
 ### Enabling State Preservation and Restoration in Your App
 
 상태 저장과 복구는 자동으로 이루어지지 않는다. `AppDelegate`에서 다음의 함수를 구현하여 적용할 수 있다. `application:shouldSaveApplicationState:`,`application:shouldRestoreApplicationState:` 
 
 위 함수의 리턴 값을 설정하여 저장,복원을 설정할 수 있다.
+
+
 
 ### The Preservation and Restoration Process
 
@@ -143,23 +148,19 @@ UIKit에게 저장,복원이 되어야 할 객체를 알려주는 것이 가장 
 
 데이터 저장이 이루어지기 전에, UIKit은 `AppDelegate`에게 `application:shouldSaveApplicationState:`를 통하여 저장이 이루어져야 하는지 묻는다. YES를 반환한다면, 데이터를 수집하여 저장한다.
 
-//사진
-
-
+![5-1](./resource/5-1.png)
 
 App이 다시 실행된다면, 저장된 파일들을 찾아 표시한다. 이때의 데이터들은 실행 시 상태복원에만 필요하므로, 완료 시 제거된다. 이 데이터는 복원,저장 과정에서 오류 발생시에도 제거된다.
+
+
 
 #### Flow of the Restoration Process
 
 기본적인 초기화와 UI로드가 완료된다면, UIKit은 `AppDeleaget`에게 복원이 일어나야 하는지  `application:shouldRestoreApplicationState:`를 통해 묻는다. 이 함수에서 복원이 가능한지 점검하며, 복원될 viewcontroller의 참조를 가진다. 
 
-//사진
-
-
+![5-2](./resource/5-2.png)
 
 UIKit은 자동으로 복원을 진행하지만, 객체 사이의 관계에 대해서는 복원하지 않는다. 대신, 각 viewcontroller들은 이전의 상태로 돌아가기 위한 정보를 저장하여야 한다. 예로 navigation controller는 stack의 view controller들을 저장한다. 
-
-
 
 이러한 상태 저장,복원시 과정이 진행되는 동안의 UI처리도 필요하다. 
 
@@ -167,7 +168,7 @@ UIKit은 자동으로 복원을 진행하지만, 객체 사이의 관계에 대�
 
 ### What Happens When You Exclude Groups of View Controllers?
 
-restoration identifier가 지정되지 않는 Viewcontroller와 그 하위 객체는 저장되지 않는다. 이 viewcontroller를 저장하지 않는다고 하더라도, 이 계층구조에서 사라지게 해선 안 된다. 
+restoration identifier가 지정되지 않는 Viewcontroller와 그 하위 객체는 저장되지 않는다. 상위 view controller를 저장하지 않는다는 것이, 모든 하위 뷰도 저장하지 않으려는 의도와 다를 수 있다.  저장하지 않더라도, App실행 시, 설정된 옵션에 따라 storyboard를 통하여 view controller가 생성될 수 있다.
 
 view controller가 저장되지 않았더라도, 객체에 대한 참조를 저장할 수 있다. 상위 뷰가 restoration identifier를 갖지 않더라도, 그 참조를 저장한다면, 저장된다. 
 
@@ -184,6 +185,7 @@ view controller가 저장되지 않았더라도, 객체에 대한 참조를 저�
 - (권장)  `encodeRestorableStateWithCoder:`,`decodeRestorableStateWithCoder:` 를 이용하여 객채를 인코딩, 디코딩 한다.
 - `application:willEncodeRestorableStateWithCoder:` ,`application:didDecodeRestorableStateWithCoder:` 를 이용하여 상태나 정보들을 저장한다.
 - collectionview,tableview의 datasource가 되는 객체는  `UIDataSourceModelAssociation`프로토콜을 상속한다.
+- ​
 
 ### Enabling State Preservation and Restoration in Your App
 
@@ -191,11 +193,15 @@ view controller가 저장되지 않았더라도, 객체에 대한 참조를 저�
 
 두 함수의 return값을 YES로 함으로써, 저장, 복원을 지정할 수 있지만, 조건적인 구현을 위해선 NO를 반환하여 처리하도록 한다. 
 
+
+
 #### Marking Your View Controllers for Preservation
 
 객체를 저장하기 위해, 적절한 `restorationIdentifier` 를 선택하는게 중요하다. 모두 다른 타입의 객체라면, 타입 명으로 지정하여도 된다. 
 
 restoration path 는  restorationID의 연속으로 이루어진다. 이 값은 유일해야한다. 
+
+
 
 #### Restoring Your View Controllers at Launch Time
 
@@ -207,6 +213,19 @@ UIKit은 복원 과정에서, 저장된 UI를 활용하여 객체를 생성한�
 - View controller가 story board를 활용하여 생성되었다면, UIKit은 저장된 storyboard를 사용하여 배치, 생성한다.
 
 restoration class를 활용한다면, `viewControllerWithRestorationIdentifierPath:coder:`함수의 선언을 통하여 새로운 객체를 생성하고, 초기화, 결과 객체를 반환하여야 한다. 
+
+```swift
+func application(_ application: UIApplication, viewControllerWithRestorationIdentifierPath identifierComponents: [Any], coder: NSCoder) -> UIViewController? {
+        var vc = UIViewController()
+        var sb = coder.decodeObject(forKey: UIStateRestorationViewControllerStoryboardKey) as! UIStoryboard
+        if sb != nil {
+            vc = sb.instantiateViewController(withIdentifier: "VC")
+            vc.restorationIdentifier = identifierComponents.last as! String
+            vc.restorationClass = UIViewController.classForCoder() as! UIViewControllerRestoration.Type
+        }
+        return vc
+    }
+```
 
 
 
@@ -227,9 +246,21 @@ NSCoding 프로토콜을 상속하는 모든 객체를 인코딩, 디코딩 할 
 
  `encodeRestorableStateWithCoder:` , `decodeRestorableStateWithCoder:` 함수 호출시 반드시 super객체의 함수를 호출하여야 한다.
 
-
+```swift
+override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        coder.encodeCInt(self.number, forKey: "Key")
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+        self.number = coder.decodeInt32(forKey: "Key")
+    }
+```
 
 coder객체는 인코딩, 디코딩 과정에서 공유되지 않는다. 저장 가능한 상태의 객체들은 고유의 coder를 받으며 이를 데이터 저장,읽기에 활용한다. unique한 coder의 사용은 namespace 충돌의 걱정을 없앤다. 하지만, 특별한 이름의 key names 사용은 피해야 한다.
+
+
 
 ### Preserving the State of Your Views
 
@@ -240,6 +271,8 @@ view의 상태를 저장하기 위해서는 다음을 준수하여야 한다.
 - view의  `restorationIdentifier`를 지정한다.
 - `restorationIdentifier`가 지정된 view controller의 view를 사용한다.
 - table view, collection view의 datasource에는  `UIDataSourceModelAssociation` protocol을 적용한다.
+
+
 
 #### UIKit Views with Preservable State
 
@@ -253,9 +286,29 @@ view의 상태를 저장하기 위해서는 다음을 준수하여야 한다.
 - UITextView
 - UIWebView
 
+
+
 #### Preserving the State of a Custom View
 
 상태를 저장해야할 custom view가 있다면, `encodeRestorableStateWithCoder:`, `decodeRestorableStateWithCoder:` 함수를 활용하여 인코딩,디코딩할 수 있다. 이 함수를 이용하여 다른 목적으로 변환될 수 없는 데이터를 저장한다. view에 표시되는 데이터나, view controller로 쉽게 설정될 수 있는 데이터는 표시하지 않는다.
+
+```swift
+override func encodeRestorableState(with coder: NSCoder) {
+  super.encodeRestorableState(with: coder)
+  let size = CGSize(width: 100, height: 200)
+  coder.encode(size, forKey: "size")
+}
+  
+override func decodeRestorableState(with coder: NSCoder) {
+  super.decodeRestorableState(with: coder)
+  if coder.containsValue(forKey: "size") {
+      let size = coder.decodeCGSize(forKey: "size")
+      self.view.frame.size = size
+  }
+}
+```
+
+
 
 #### Implementing Preservation-Friendly Data Sources
 
@@ -264,6 +317,8 @@ collection View 나 table View의 datasource가 `UIDataSourceModelAssociation` �
 `UIDataSourceModelAssociation` 를 적용하기 위해선, 후에 App이 시작되었을 때의 상태와 구별이 가능해야 한다. 데이터에 지정하는 id값은 불변해야함을 의미한다. 
 
 CoreData를 사용하는 App은 이 프로토콜을 효과적으로 사용할 수 있다. CoreData에 저장된 각 객체들은 unique한 id를 가지고있으므로, 이를 활용하여 시간이 지난 후에 다시 데이터를 불러와 배치할 수 있다.
+
+
 
 ### Preserving Your App’s High-Level State
 
@@ -280,6 +335,8 @@ UIKit은 view나 view controller에 저장되는 데이터 왜에도 App의 다�
 - 복원 시점에서 view controller 객체를 교체하면 안 된다.
 - 사용자가 종료를 강제한다면, 저장된 정보는 삭제된다.
 
+
+
 ## Tips for Developing a VoIP App
 
 iOS8이상에서, APNs와 PushKit Framework를 활용해 VoIP App을 개발할 수 있다. 푸시 알람을 활용하면, VoIP서비스를 위해 지속적인 네트워크 연결,소캣을 구성할 필요가 없다. 
@@ -292,6 +349,8 @@ iOS8이상에서, APNs와 PushKit Framework를 활용해 VoIP App을 개발할 �
 - 더 나은 UX를 위해, Core Telephony framework를 활용하라.
 - 개선된 VoIP App을 제공하기 위해, System Configuration framework를 활용하여 네트워크 변경을 감지하고, 가능한 많이 sleep 상태를 유지하라.
 - 알람 서버에 VoIP를 연결할 수 있도록 VoIP Services certificate를 요청하라.
+
+
 
 
 
