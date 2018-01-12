@@ -68,13 +68,13 @@ App이 custom URL을 수신할 수 있으므로, 해당 URL을 등록해놓아�
 
 Custom URL scheme을 가진 App은 해당 URL요청 시 그 요청을 처리하여야 한다. 요청은 `AppDelegate`에서 수신되며,  `application:willFinishLaunchingWithOptions:` , `application:didFinishLaunchingWithOptions:` 함수를 활용하여 처리할 수 있으며 return 값을 YES로 하여 App을 실행할 수 있다.  실행 후에, `application:openURL:sourceApplication:annotation:` 함수를 활용하여 파일을 열 수 있다.
 
-//사진 6-1
 
 
+![6-1](./resource/6-1.png)
 
 App이 실행 중 이지만, Background 상태라면, Foreground로 변경된다. 변경 후에, `application:openURL:sourceApplication:annotation:` 를 호출하여 URL을 확인, 실행한다. 
 
-//사진 6-2
+![6-2](./resource/6-2.png)
 
 **NOTE: URL scheme을 통한 실행 시, 다른 launch image를 표시할 수 있다.** 
 
@@ -85,16 +85,6 @@ App이 실행 중 이지만, Background 상태라면, Foreground로 변경된다
 ### Displaying a Custom Launch Image When a URL is Opened
 
 Lauch Image의 파일명을 `*<basename>-<url_scheme><other_modifiers>.png`로 지정하여 URL Scheme을 통한 App실행 시 표시할 수 있다.
-
-`
-
-
-
-
-
-
-
-
 
 
 
