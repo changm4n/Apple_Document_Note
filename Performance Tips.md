@@ -116,5 +116,37 @@ Wi-Fi와 cellular는 미사용시 중지되므로, 데이터 교환은 최대한
 
 무선 통신으로 데이터가 iCloud나 iTunes로 백업된다. app sandbox에 저장된 데이터는 백업여부가 결정된다. 큰 규모의 데이터를 자주 저장한다면, 전체적인 백업 과정을 느리게 만들 것 이다.
 
+iCloud와 iTunes는 다음 폴더에 저장된 파일은 백업하지 않는다.
 
+- Application_Home/AppName.app
+
+
+- Application_Data/Library/Caches
+
+
+- Application_Data/tmp
+
+백업에 긴 시간이 소요되는걸 막기 위해서는, 알맞은 위치에 파일을 저장하여야 한다. 다음 가이드라인을 참고하자.
+
+- 중요한 데이터는 Application_Data/Documents 폴더에 저장한다. App에 의해 재생산될 수 없는 데이터를 의미한다.
+- App이 다운로드 했거나, 실행, 재생산 하는 파일들을 지원하여야 한다. 이러한 파일의 저장 위치는 iOS 5.1 이후로 Application_Data/Library/Application support 폴더로 저징하여야 하며, `NSURLIsExcludedFromBackupKey` 를 추가하여  `setResourceValue:forKey:error:` 을 이용한  NSURL에 대응할 수 있다. 이러한 작업은 iCloud나 iTunes가 파일을 백업하는걸 방지한다.
+- 캐시 데이터는 Application_Data/Library/Caches 폴더에 저장하여야 한다. 
+- 임시 파일은 Application_Data/tmp폴더에 저장되어야 한다. 
+
+
+
+### Files Saved During App Updates
+
+App업데이트 시, iTunes는 업데이트를 새로운 앱 폴더에 저장한다. 그 후에 사용자 데이터 파일을 기존의 폴더에서 새로운 폴더로 이동시킨다. 다음 폴더에 저장된 파일들은 업데이트 과정동안 보존된다.
+
+- Application_Data/Documents
+- Application_Data/Library
+
+
+
+## Move Work off the Main Thread
+
+Main thread는 사용자 터치, 다른 입력들을 다루는 thread이기 때문에, 여러 작업은 제한을 두는게 좋다. 사용자 반응에 즉각적으로 대응할 준비를 하기 위해선, Main thread에서 긴 작업 수행은 지양하는 것이 좋다. 그러한 작업들은 Background thread에서 이루어져야 한다. GCD나 NSOperation 을 이용하라.
+
+App을 시작, 종료하는 순간에 이와같은 작업 배치는 아주 중요하다. App이 시작되는 시점에서, Main thread가 막힌다면, system은 App을 완전히 실행되기 전 종료시킬 수 있다. 
 
