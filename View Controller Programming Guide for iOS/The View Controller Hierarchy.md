@@ -22,27 +22,15 @@ Container View controller는 주어진 공간을 체우는 역할을 한다. 보
 
 새로운 View controller를 표시함으로써, 기존의 View controller의 내용을 숨긴다. 이러한 방식은 새로운 View controller 를 표현하는 일반적인 방법이다. View controller 를 표시하면, UIKit은 기존의 View controller 와 새로이 표시된 View controller 사이의 관계를 설정한다. 이러한 관계는 View controller  간의 계층관계를 형성하며, 새로운 View controller 를 runtime에 추가하는 방법이 된다.
 
-
-
-//사진
+![1-3](./resource/1-3.png)
 
 
 
 Container View controller 가 포함된다면, UlKit은 표현 chain을 수정하여 코드를 단순화시킨다. View controller 를 표현하는 방법에 따라 서로 다른 규칙을 가진다. 예로, Full-screen 표현은 화면 전체를 덮는다. View controller 를 표시할 때, UIKit은 적절한 context를 제공한다. 대부분의 경우엔, 제일 가까운 Container View controller 를 선택하지만, Window의 Root View controller 를 선택할 수 있다. 가끔의 경우엔 직접 표현 context를 지정하여 UIKit에게 알려줄 수 있다.
 
-
-
-//사진
-
-
-
 전체 화면 표시를 실행하면, 표현되는 View controller 는 화면 전체를 덮어야 한다. 자식 뷰에게 Container 의 bounds를 알도록 하기 보단, container가 그 표현을 담당할지 결정한다.  다음 예에선, NavigationController가 전체 화면을 덮음으로, Presenting View controller 의 역할을 하며, 표현을 담당한다.
 
-
-
-
-
-
+![1-4](./resource/1-4.png)
 
 
 
