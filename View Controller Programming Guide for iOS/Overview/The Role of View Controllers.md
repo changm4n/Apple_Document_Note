@@ -11,7 +11,7 @@
 
 View Management의 가장 중요한 역할은 View들의 계층 구조를 관리하는 것 이다. 모든 View controller 들은 유일한 root view를 가지며 그 root view에 표시할 데이터를 추가한다. 아래의 그림처럼, View controller는 항상 Root View를 가지며, 각각을 subview에 대한 강한 참조를 가진다.
 
-![1-1](./resource/1-1.png)
+![1-1](../resource/1-1.png)
 
 
 
@@ -21,7 +21,7 @@ Container View controller 는 자신이 가진 View들을 관리한다. 또한 �
 
 Split View controller는 자식 view들의 위치, 사이즐르 관리하며 자식 View controller 는 담길 내용들을 관리한다.
 
-![1-2](./resource/1-2.png)
+![1-2](../resource/1-2.png)
 
 ### Data Marshaling
 
