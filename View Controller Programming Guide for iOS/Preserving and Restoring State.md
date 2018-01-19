@@ -24,7 +24,9 @@ restoration ID는 간단하게 식별 가능한 값을 지정하여야 한다. �
 
 일정 View Controller의 그룹을 복원 과정에서 제외하고 싶다면, restoration ID의 값을 nil로 지정하여야 한다. 
 
-//사진 7-1
+![스크린샷 2018-01-19 오전 9.49.23](./resource/2-4.png)
+
+
 
 하나 또는 많은 수를 제외하더라도, 복원 가정에서 전체가 제외되진 않는다. 앱이 구동되는 시점에 기본으로 설정된 View Controller의 경우 복원된다. 이러한 자동 복원에서 제외시키더라도, 수동으로 복원을 설정할 수 있다. 복원 아카이브에서 View Controller에 대한 참조를 저장한다면, 상태가 저장된다. 
 
@@ -82,6 +84,12 @@ static func viewController(withRestorationIdentifierPath identifierComponents: [
 - 사용자 설정 이나 현재 설정의 내용을 담는 View를 포함하는  View controller
 
 
+
+### Tips for Saving and Restoring Your View Controllers
+
+- 모든 View Controller를 저장할 필요는 없다.
+- 복원 시점에 View Controller를 교체하는 것은 피하라.
+- View Controller의 저장을 의도에 맞게 사용하라.]
 
 
 

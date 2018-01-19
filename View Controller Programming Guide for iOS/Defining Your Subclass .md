@@ -50,16 +50,12 @@ View controller 에 대한 UI구현은 스토리보드를 활용한다. 코드�
 - View controller 의 `awakeFromNib()`을 호출한다. - 이 함수가 호출될 때, 특성 컬렉션은 비어있고, View들은 자신의 위치에 배치되어있지 않을 수 있다.
 - View controller 의 `viewDidLoad()`를 호출한다. - View들을 추가, 제거하거나 레이아웃을 수정, 데이터를 불러오는 작업을 진행한다.
 
-
-
 View들을 화면에 표시하기 전에, UIKit은 그들을 수정할 기회를 제공한다. 
 
 - `viewWillAppear:` View가 곧 표시되는 순간 호출된다.
 - layout을 수정한다.
 - View들을 화면에 표시한다.
 - 표시 후 `viewDidAppear:`가 호출된다.
-
-
 
 View의 위치, 크기를 추가, 제거, 수정할 시 View 에 적용된 Constraint를 추가,제거 해주어야 한다. 레이아웃 관련 작업은 UIKit의 레이아웃 관련설정을 지저분하게 할 수 있다. 
 
