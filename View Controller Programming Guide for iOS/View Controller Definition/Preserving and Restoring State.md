@@ -24,7 +24,7 @@ restoration ID는 간단하게 식별 가능한 값을 지정하여야 한다. �
 
 일정 View Controller의 그룹을 복원 과정에서 제외하고 싶다면, restoration ID의 값을 nil로 지정하여야 한다. 
 
-![스크린샷 2018-01-19 오전 9.49.23](./resource/2-4.png)
+![스크린샷 2018-01-19 오전 9.49.23](../resource/2-4.png)
 
 
 
@@ -37,8 +37,8 @@ restoration ID는 간단하게 식별 가능한 값을 지정하여야 한다. �
  일부 View는 상위 View와는 관계 없는 고유한 특성을 가진다. 예로, scrollView의 경우 스크롤 위치를 저장할 수 있다. View controller 가 ScrollView의 컨텐츠를 제공하는 동안, ScrollView는 시각적인 상태를 복원하여야 한다. 그 방법은 다음과 같다.
 
 -  `restorationIdentifier` 를 지정한다.
-- restoration ID를 가진 View controller 의 View를 사용한다.
-- table,collection View  의 경우, `UIDataSourceModelAssociation`를 dataSource에 적용한다.
+-  restoration ID를 가진 View controller 의 View를 사용한다.
+-  table,collection View  의 경우, `UIDataSourceModelAssociation`를 dataSource에 적용한다.
 
 
 
@@ -89,7 +89,7 @@ static func viewController(withRestorationIdentifierPath identifierComponents: [
 
 - 모든 View Controller를 저장할 필요는 없다.
 - 복원 시점에 View Controller를 교체하는 것은 피하라.
-- View Controller의 저장을 의도에 맞게 사용하라.]
+- View Controller의 저장을 의도에 맞게 사용하라.
 
 
 

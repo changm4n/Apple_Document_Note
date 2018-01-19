@@ -8,6 +8,8 @@ Container View controller는 여러 View controller 의 내용을 하나의 UI�
 
 여러 측면에서, Container View controller는 루트뷰와 다른 컨텐츠를 관리하는 의미에서 다른  View controller와 동일한다. 차이점은, Container View controller는 그것의 컨텐츠를 다른  View controller에서 가져온다는 것 이다.  가져온 컨텐츠를 이용하여 표시하며, 그것의 계층구조에 포함시킨다. Container View controller는 삽입된  View controller를 알맞은 위치와 크기로 설정한다.
 
+
+
 개발자가 자신의 Container View controller를 정의할때, Container와 Contained의 관계를 이해하여야 한다. 다음의 물음을 참고하자.
 
 - Container의 역할은 무엇이고, 자식 뷰들의 역할은 무엇인가?
