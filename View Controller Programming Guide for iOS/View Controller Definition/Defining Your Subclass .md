@@ -59,7 +59,7 @@ View들을 화면에 표시하기 전에, UIKit은 그들을 수정할 기회를
 
 View의 위치, 크기를 추가, 제거, 수정할 시 View 에 적용된 Constraint를 추가,제거 해주어야 한다. 레이아웃 관련 작업은 UIKit의 레이아웃 관련설정을 지저분하게 할 수 있다. 
 
-
+View Controller Life Cycle - https://www.codementor.io/hemantkumar434/view-controller-lifecycle-ios-applications-7oyju9lp6
 
 ### Managing View Layout
 
@@ -78,9 +78,21 @@ View Controller 는 `viewWillLayoutSubviews`와 `viewDidLayoutSubview`를 활용
 다음으로는 Layout을 효율적으로 관리하는 Tip이다.
 
 - Auto Layout을 활용하자. 
+
 - top, bottom layout guide의 이점을 활용하자. - 이러한 guide를 활용함으로써, 항상 View들이 보여지도록 설정할 수 있다.  top guide는 status bar, navigation bar를 고려한다. 비슷하게, bottom guide는 tab bar나 toolbar를 고려한다.
+
 - View를 제거, 추가할 때 constraints를 수정하라. 
+
 - View에 animation을 적용할 때, constraints를 제거하라. - UIKit의 CoreAnimation을 활용하여 animation을 적용할 때, constraints를 제거하며 종료 후 추가하여야 한다. 애니메이션이 종료된 후, 알맞은 값을 재설정 해주어야 한다.
+
+  - ```swift
+    self.topDistanceConstraint.constant = 200 
+    UIView.animate(withDuration: 0.5, animations: {
+     self.view.layoutIfNeeded()
+     self.topView.alpha = 0.25
+    })
+    ```
+
 
 
 

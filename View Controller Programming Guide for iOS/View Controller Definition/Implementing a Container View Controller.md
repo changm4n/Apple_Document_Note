@@ -8,8 +8,6 @@ Container View controller는 여러 View controller 의 내용을 하나의 UI�
 
 여러 측면에서, Container View controller는 루트뷰와 다른 컨텐츠를 관리하는 의미에서 다른  View controller와 동일한다. 차이점은, Container View controller는 그것의 컨텐츠를 다른  View controller에서 가져온다는 것 이다.  가져온 컨텐츠를 이용하여 표시하며, 그것의 계층구조에 포함시킨다. Container View controller는 삽입된  View controller를 알맞은 위치와 크기로 설정한다.
 
-
-
 개발자가 자신의 Container View controller를 정의할때, Container와 Contained의 관계를 이해하여야 한다. 다음의 물음을 참고하자.
 
 - Container의 역할은 무엇이고, 자식 뷰들의 역할은 무엇인가?
@@ -31,19 +29,19 @@ Navigation Controller는 데이터를 계층 구조로 관리하며 Navigation�
 
 자식 뷰에서 특정 이벤트가 발생하면, Navigation Controller에게 새로운 View Controller를 push하라는 요청을 보낸다. 자식 뷰가 새로운 View Controller를 관리하며, Navigation Controller는 트랜지션을 담당한다. 
 
-![2-1](./resource/2-1.png)
+![2-1](../resource/2-1.png)
 
 ### Example: Split View Controller
 
 UISplitViewController는  mater-detail의 형태로 두 View Controller 를 표현한다. View controller 를 배치하는 형식은 기기의 상태에 따라 다르다.  가로 환경에선, 두 View Controller 가 나란히 표시되며 Master는 숨기거나 필요할 때 표시될 수 있다. Compact 환경에선, 하나의 View Controller 만 표시된다.
 
-![2-2](./resource/2-2.png)
+![2-2](../resource/2-2.png)
 
 ### Configuring a Container in Interface Builder
 
  Container view를 활용하여 부모-자식 관계의 구조를 쉽게 구현할 수 있다. Container view는 부모 뷰에서 자식 뷰의 placeholder형태로 표시되며, 크기와 위치를 설정하여 자식 뷰를 구현할 수 있다. 이때 자식 뷰는 부모 뷰와 함께 초기화 되어야 한다.
 
-![2-3](./resource/2-3.png)
+![2-3](../resource/2-3.png)
 
 ### Implementing a Custom Container View Controller
 
